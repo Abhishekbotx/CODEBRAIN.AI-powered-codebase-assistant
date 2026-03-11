@@ -10,6 +10,11 @@ def tokenize_text(text):
     return tokenizer.encode(text, add_special_tokens=False)
 
 
+def debug_prompt(x):
+    print("\n ----FINAL PROMPT STARTS HERE----\n")
+    print(x)
+    print("\n-----ENDS HERE------n")
+    return x
 
 def split_extension(file_path):
     ext = os.path.splitext(file_path)[1].lower()
