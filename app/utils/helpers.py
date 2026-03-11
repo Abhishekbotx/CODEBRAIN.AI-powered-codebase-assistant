@@ -9,3 +9,8 @@ def count_tokens(code):
 def tokenize_text(text):
     return tokenizer.encode(text, add_special_tokens=False)
 
+
+
+def split_extension(file_path):
+    ext = os.path.splitext(file_path)[1].lower()
+    return ext
