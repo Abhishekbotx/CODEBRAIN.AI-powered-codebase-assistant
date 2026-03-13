@@ -1,6 +1,24 @@
 from pathlib import Path
 from app.utils.helpers import count_tokens
 
+
+def chunk_nodes(node,code:bytes,max_token,filepath:str):
+    chunks=[]
+    current_tokens=0
+    current_chunks=[]
+    
+    
+    for child in node.children:
+        node_text=code[child.start_byte:child.end_byte].decode("utf-8")
+        
+                        
+    
+    
+    
+#same thing is map function in javascript 
+# const content = nodes
+#   .map(n => code.slice(n.start_byte, n.end_byte).toString("utf-8")).join("\n");   
+ 
 #Simpler version  in pythons  
 # texts = []
 # for n in nodes:
