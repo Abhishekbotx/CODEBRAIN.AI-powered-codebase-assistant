@@ -1,6 +1,19 @@
 from pathlib import Path
 from app.utils.helpers import count_tokens
 
+#Simpler version  in pythons  
+# texts = []
+# for n in nodes:
+#     text = code[n.start_byte:n.end_byte].decode("utf-8")
+#     texts.append(text)   
+ 
+# items = ["A", "B", "C"]
+# result = "-".join(items)
+# print(result)
+# Output:
+
+# A-B-C   
+ 
 def build_chunks(nodes,code:bytes,filepath:str):
     content="\n".join([code[n.start_byte:n.end_byte].decode("utf-8") for n in nodes])
     return {
