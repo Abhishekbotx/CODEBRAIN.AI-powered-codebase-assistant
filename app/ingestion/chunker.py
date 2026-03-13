@@ -11,7 +11,28 @@ def chunk_nodes(node,code:bytes,max_token,filepath:str):
     for child in node.children:
         node_text=code[child.start_byte:child.end_byte].decode("utf-8")
         
-                        
+        node_token=count_tokens(node_text)
+        
+        #case 1: if nodesize is greater than max_tokens
+        if(node_token>max_token):
+            if current_chunks:
+                chunks.append(build_chunks(current_chunks,code,filepath))
+                current_chunks=[]
+                current_tokens=0
+            
+            
+            #recurse down in the same loop
+            chunks.extend(chunk_nodes(child,code,max_token,filepath))
+            continue;
+        
+        
+        
+    
+    #flush the remaining chunks which were in the current_chunks but not added to chunks because the token limit was not breached
+    if current_chunks:
+        chunks.append(build_chunks(current_chunks,code,filepath))
+    
+    return chunks                       
     
     
     
