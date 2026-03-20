@@ -46,4 +46,27 @@ def chunk_to_chromadb(chunks,collection):
     stored=0;
     skipped=0;
     
-    ## plan is to add code in content and extra infos in metadata
+    for chunk in chunks:
+        print(f"Chunk: {chunk['type']} | Lines: {chunk['start_line']}-{chunk['end_line']} | Tokens: {chunk['tokens']} | Parent Context: {chunk['parent_context']}")
+
+        try:
+            collection.add(
+                ids=[
+                    f"{chunk['file_path']}:{chunk['start_line']}-{chunk['end_line']}"
+                    
+                ],
+                documents=[
+                    chunk["content"]      # ← raw code text, chroma embeds THIS
+                    
+                ],
+
+            )
+            stored+=1
+        except Exception as e:
+            print(f"Error storing chunk: {e}")
+            skipped+=1    
+
+    print(f"stored: {stored} chunks")
+    print(f"skipped: {skipped} chunks")
+    
+    return stored, skipped
