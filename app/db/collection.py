@@ -37,3 +37,13 @@ def get_collection():
     )
     print("Collection created with sparse index. Now re-run scanner.py.")
     return collection
+
+
+
+
+
+def chunk_to_chromadb(chunks,collection):
+    stored=0;
+    skipped=0;
+    
+    ## plan is to add code in content and extra infos in metadata
