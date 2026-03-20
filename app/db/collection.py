@@ -24,3 +24,16 @@ def get_collection():
         ),
         key="sparse_embedding",
     )
+
+    # try:
+    #     client.delete_collection("codebase")
+    # except Exception:
+    #     pass
+
+    collection =client.get_or_create_collection(
+                    name="codebase",
+                    embedding_function=dense_embed_fn,
+                    schema=schema
+    )
+    print("Collection created with sparse index. Now re-run scanner.py.")
+    return collection
