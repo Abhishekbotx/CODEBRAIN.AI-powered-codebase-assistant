@@ -45,7 +45,6 @@ def get_collection():
 def chunk_to_chromadb(chunks,collection):
     stored=0;
     skipped=0;
-    
     for chunk in chunks:
         print(f"Chunk: {chunk['type']} | Lines: {chunk['start_line']}-{chunk['end_line']} | Tokens: {chunk['tokens']} | Parent Context: {chunk['parent_context']}")
 
@@ -59,7 +58,19 @@ def chunk_to_chromadb(chunks,collection):
                     chunk["content"]      # ← raw code text, chroma embeds THIS
                     
                 ],
-
+                metadatas=[
+                    {
+                        "type":       chunk["type"],
+                        "file":       chunk["file_path"],
+                        "start_line": chunk["start_line"],
+                        "end_line":   chunk["end_line"],
+                        "tokens":     chunk["tokens"],
+                        "node_count": chunk["node_count"],
+                        "parent_context": chunk["parent_context"],
+                    }
+                    
+                ]
+                # no embeddings here → as chroma calls embed_fn(documents) internally
             )
             stored+=1
         except Exception as e:
