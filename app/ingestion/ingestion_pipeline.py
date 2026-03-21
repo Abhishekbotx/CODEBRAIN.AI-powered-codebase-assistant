@@ -10,3 +10,14 @@ SUPPORTED_EXTENSIONS = tuple(LANGUAGE_MAP.keys())
 SKIP_DIRS = {"__pycache__", "node_modules", ".git", ".venv", "venv", "dist", "build"}
 collection = get_collection()
 
+def process_file(file_path):
+    parser = get_parser(file_path)
+    if not parser:
+        return  # skip unsupported file
+    
+    with open(file_path, "rb") as f:
+        code = f.read()
+
+    tree = parser.parse(code)
+    chunks = chunk_nodes(tree.root_node, code, 1000, file_path)
+    return chunks
