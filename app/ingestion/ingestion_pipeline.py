@@ -21,3 +21,30 @@ def process_file(file_path):
     tree = parser.parse(code)
     chunks = chunk_nodes(tree.root_node, code, 1000, file_path)
     return chunks
+
+
+def ingest_repo(folder_path):
+    total = 0
+    skip=0
+    for dirpath, dirnames, filenames in os.walk(folder_path):
+        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+        for file in filenames:
+            # if file.endswith(".py"):
+            file_path=os.path.join(dirpath, file).replace("\\", "/")
+            
+            print(f"Processing file: {file_path}")
+            
+            ext=split_extension(file_path)
+            
+            # print(f"file path: {file_path.endswith(('.py','.ts'))}")
+            #🍁 tuple in python is defined with parentheses, so we can use it to check for multiple extensions at once.
+            
+            if ext in LANGUAGE_MAP:
+            
+                log.info(f" Processing: {file_path}")
+                    
+                chunks = process_file(file_path)
+
+                stored, skipped = chunk_to_chromadb(chunks,collection=collection)
+                skip+=skipped
+                total += stored
