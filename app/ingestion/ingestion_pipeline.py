@@ -42,9 +42,15 @@ def ingest_repo(folder_path):
             if ext in LANGUAGE_MAP:
             
                 log.info(f" Processing: {file_path}")
+                try:
                     
-                chunks = process_file(file_path)
+                    chunks = process_file(file_path)
 
-                stored, skipped = chunk_to_chromadb(chunks,collection=collection)
-                skip+=skipped
-                total += stored
+                    stored, skipped = chunk_to_chromadb(chunks,collection=collection)
+                    skip+=skipped
+                    total += stored
+                except Exception as e:
+                    log.error(f"   failed: {file_path} → {e}")
+    
+
+    print(f"\nTotal stored: {total}, \nTotal skipped:{skipped}")
