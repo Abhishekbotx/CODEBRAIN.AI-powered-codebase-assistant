@@ -41,7 +41,7 @@ def ingest_repo(folder_path):
             
             if ext in LANGUAGE_MAP:
             
-                log.info(f" Processing: {file_path}")
+                log.info(f" - - - - Processing: {file_path}")
                 try:
                     
                     chunks = process_file(file_path)
