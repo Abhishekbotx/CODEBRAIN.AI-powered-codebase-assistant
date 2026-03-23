@@ -20,3 +20,7 @@ def retriever_fn(query: str) -> list[SearchResult]:
         n_results=3,
         # verbose=False,
     )
+
+
+retriever = RunnableLambda(retriever_fn)
+formatter = RunnableLambda(format_docs)
