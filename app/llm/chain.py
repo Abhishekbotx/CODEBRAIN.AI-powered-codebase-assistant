@@ -36,7 +36,7 @@ rag_chain = (
 #       }
 #In Runnable parallel: They(context and question) run independently in parallel, then get merged.
     | SINGLE_TURN_PROMPT
-    | RunnableLambda(debug_prompt)
+    # | RunnableLambda(debug_prompt)
     | llm
     | StrOutputParser()
-)
+) 
