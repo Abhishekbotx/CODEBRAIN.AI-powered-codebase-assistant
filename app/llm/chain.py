@@ -44,6 +44,7 @@ rag_chain = (
 
 def make_chat_chain(chat_history: list):
     """
+    Returns a chain 
     Call this each turn, passing the updated history list.
     """
     return (
@@ -53,7 +54,7 @@ def make_chat_chain(chat_history: list):
             "chat_history": RunnableLambda(lambda _: chat_history),
         })
         | CHAT_PROMPT
-        | RunnableLambda(debug_prompt)
+        # | RunnableLambda(debug_prompt)
         | llm
         | StrOutputParser()
     )
