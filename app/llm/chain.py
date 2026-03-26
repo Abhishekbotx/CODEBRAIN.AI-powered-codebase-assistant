@@ -39,4 +39,21 @@ rag_chain = (
     # | RunnableLambda(debug_prompt)
     | llm
     | StrOutputParser()
-) 
+)
+
+
+def make_chat_chain(chat_history: list):
+    """
+    Call this each turn, passing the updated history list.
+    """
+    return (
+        RunnableParallel({
+            "context":      retriever | formatter,
+            "question":     RunnablePassthrough(),
+            "chat_history": RunnableLambda(lambda _: chat_history),
+        })
+        | CHAT_PROMPT
+        | RunnableLambda(debug_prompt)
+        | llm
+        | StrOutputParser()
+    )
