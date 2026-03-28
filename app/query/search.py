@@ -15,4 +15,12 @@ def hybrid_search(
     k:               int   = 60,
 ) -> list[SearchResult]:
 
-    
+    hybrid_rank = Rrf(
+        ranks=[
+            Knn(query=query, key="#embedding",        return_rank=True, limit=knn_limit),
+            Knn(query=query, key="sparse_embedding",  return_rank=True, limit=knn_limit),
+        ],
+        weights=[semantic_weight, keyword_weight],
+        k=k,
+    )
+
