@@ -24,3 +24,29 @@ def hybrid_search(
         k=k,
     )
 
+    search_obj = Search().rank(hybrid_rank).limit(n_results)
+
+    if file_filter and type_filter:
+        search_obj = search_obj.where(K("file").contains(file_filter) & K("type").contains(type_filter))
+    elif file_filter:
+        search_obj = search_obj.where(K("file").contains(file_filter))
+    elif type_filter:
+        search_obj = search_obj.where(K("type").contains(type_filter))
+
+    search_obj = search_obj.select(
+        K.DOCUMENT, K.SCORE, K.ID,
+        "file", "start_line", "end_line", "type", "tokens", "node_count", "parent_context",
+    )
+    collection=get_collection()
+    rows = collection.search(search_obj).rows()[0]
+
+    return [
+        SearchResult(
+            id       = row["id"],
+            content  = row["document"],
+            score    = row["score"],
+            metadata = row["metadata"],
+        )
+        for row in rows
+    ]
+
