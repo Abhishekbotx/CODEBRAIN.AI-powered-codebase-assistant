@@ -26,3 +26,16 @@ def format_docs(results: list[SearchResult]) -> str:
 
 
 
+
+def print_results(results: list[SearchResult], show_code: bool = True) -> None:
+    print(f"\n{'═' * 60}  {len(results)} result(s)\n")
+    for i, r in enumerate(results, 1):
+
+        if show_code:
+            print("     ┌─────────────────────────────────────────")
+            for line in r.content.splitlines()[:10]: #printing only 10 lines
+                print(f"     │ {line}")
+            if len(r.content.splitlines()) > 10:
+                print(f"     │ … ({len(r.content.splitlines())} lines total)")
+            print("     └─────────────────────────────────────────")
+        print()
