@@ -41,3 +41,10 @@ def print_results(results: list[SearchResult], show_code: bool = True) -> None:
                 print(f"     │ … ({len(r.content.splitlines())} lines total)")
             print("     └─────────────────────────────────────────")
         print()
+
+
+
+if __name__ == "__main__":
+    for q in ["where is chromadb setup?", "token counting function"]:
+        print(f"\nQuery: {q!r}")
+        print_results(hybrid_search(q, n_results=3))
