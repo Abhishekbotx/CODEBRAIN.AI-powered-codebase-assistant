@@ -34,12 +34,12 @@ def print_results(results: list[SearchResult], show_code: bool = True) -> None:
               f"lines {r.metadata.get('start_line')}–{r.metadata.get('end_line')}  "
               f"score={r.score:.4f}")
         if show_code:
-            print("     ┌─────────────────────────────────────────")
+            print("     ┌───────────────────────────────────────── START")
             for line in r.content.splitlines()[:10]: #printing only 10 lines
                 print(f"     │ {line}")
             if len(r.content.splitlines()) > 10:
                 print(f"     │ … ({len(r.content.splitlines())} lines total)")
-            print("     └─────────────────────────────────────────")
+            print("     └───────────────────────────────────────── END")
         print()
 
 
