@@ -20,4 +20,13 @@ def ask(question: str, stream: bool = False) -> str:
     Returns:
         answer string
     """
-    
+    if stream:
+        full = ""
+        for chunk in rag_chain.stream(question): #use stream mode when agent is involved with toools
+            
+            print(chunk, end="", flush=True)
+            full += chunk
+        print("fulll:",full)
+        return full
+    else:
+        return rag_chain.invoke(question)
