@@ -45,4 +45,37 @@ def chat_repl() :
 
     history: list = []
 
-    
+    while True:
+        try:
+            question = input("You: ").strip()
+        except (EOFError, KeyboardInterrupt):
+            print("\nBye!")
+            break
+
+        if not question:
+            continue
+
+        if question.lower() in ("exit", "quit"):
+            print("Bye!")
+            break
+
+        if question.lower() == "clear":
+            history = []
+            print("History cleared.\n")
+            continue
+        print("history present:",history)    
+        chain = make_chat_chain(history)
+
+        print("\nAssistant: ", end="", flush=True) # 🍁flush =true, It forces Python to immediately write the output to the console.
+        
+        answer = ""
+        for chunk in chain.stream(question):
+            print(chunk, end="", flush=True)
+            answer += chunk
+        print("\n")
+
+        # Update history for next turn
+        history.append(HumanMessage(content=question))
+        history.append(AIMessage(content=answer))
+
+
