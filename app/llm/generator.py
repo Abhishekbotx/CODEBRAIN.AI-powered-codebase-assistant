@@ -30,3 +30,19 @@ def ask(question: str, stream: bool = False) -> str:
         return full
     else:
         return rag_chain.invoke(question)
+
+
+def chat_repl() :
+    """
+    Interactive multi-turn chat REPL.
+    Type 'exit' or 'quit' to stop.
+    Type 'clear' to reset chat history.
+    """
+    print("\n" + "═" * 60)
+    print("  CodeBrain Chat  —  Llama 3 70B + Hybrid Search")
+    print("  Commands: 'exit' to quit | 'clear' to reset history")
+    print("═" * 60 + "\n")
+
+    history: list = []
+
+    
