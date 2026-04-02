@@ -79,3 +79,24 @@ def chat_repl() :
         history.append(AIMessage(content=answer))
 
 
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="CodeBrain query pipeline")
+    parser.add_argument("--chat", action="store_true", help="Launch interactive chat REPL")
+    parser.add_argument("--question", "-q", type=str, help="Single question to answer")
+    print("parseeer:",parser)
+    args = parser.parse_args()
+
+    if args.chat:
+        chat_repl()
+    elif args.question:
+        ask(args.question,True)
+    else:
+        question = "where is the chromadb setup code?"
+        answer = ask(question,True)
+        print(f"A: {answer}\n")
+            
+            
+#----Fixes-----
+# 1. If some asks bad questions then chromdb should be hit for hybrid search it should be responded at the same time
