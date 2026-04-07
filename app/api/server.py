@@ -121,6 +121,11 @@ def chat():
             traceback.print_exc()
             yield f"data: {json.dumps({'type':'error','value': str(e)})}\n\n"
 
+    # This below line  keeps connection open
+    return Response(
+        stream_with_context(generate()),
+        mimetype="text/event-stream",
+    )
 
 
 
