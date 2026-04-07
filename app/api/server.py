@@ -95,6 +95,36 @@ def chat():
         ...
         data: {"done": true}
     """
+    data = request.json or {}
+    query = data.get("query", "").strip()
+
+    if not query:
+        return jsonify({"error": "Query required"}), 400
+
+    def generate():
+        try: 
+            for chunk in rag_chain.stream(query):
+                payload = json.dumps({'type': 'token', 'value': chunk})
+                yield f"data: {payload}\n\n"
+        #  json.dumps, its used to convert python objects suchs as dict or list as json formatted string 
+        #  The yield keyword turns a function into a function generator.
+        #  The function generator returns an iterator.(which can be iterated using loop)          
+            # LLM finished generating, then send done =true for you frontend handling using sse
+            # yield f"data: {json.dumps({'done': True})}\n\n" XX Bad
+            payload = json.dumps({'type': 'done', 'value': True})
+            yield f"data: {payload}\n\n" # Better
+        #SSE protocol rule: Server-Sent Events require:    
+        #data: <message>\n\n
+        #That double newline means:
+        # “this message is complete, send it to client”    
+        except Exception as e:
+            traceback.print_exc()
+            yield f"data: {json.dumps({'type':'error','value': str(e)})}\n\n"
+
+
+
+
+
     
 
 if __name__ == "__main__":
