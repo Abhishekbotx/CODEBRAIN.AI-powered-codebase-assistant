@@ -5,7 +5,6 @@ Flask API for CodeBrain — code ingestion + hybrid search + LLM streaming.
 Endpoints:
   POST /upload   — upload files, ingest into ChromaDB
   POST /chat     — streaming LLM answer via Server-Sent Events
-  GET  /status   — health check + collection doc count
 """
 
 import os
@@ -27,7 +26,7 @@ UPLOAD_DIR = "uploaded_repos"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
-# ── /upload ───────────────────────────────────────────────────────────────────
+# APIS
 
 @app.route("/upload", methods=["POST"])
 def upload_files():
@@ -43,7 +42,7 @@ def upload_files():
 
     repo_path = os.path.join(UPLOAD_DIR, "repo")
 
-    # clear previous upload
+    # clearing previous upload
     if os.path.exists(repo_path):
         shutil.rmtree(repo_path)
     os.makedirs(repo_path, exist_ok=True)
@@ -66,7 +65,7 @@ def upload_files():
     if not saved:
         return jsonify({"error": "All files failed to save", "details": skipped}), 500
 
-    # run ingestion
+    # then ingestion
     try:
         stats = ingest_repo(repo_path)   # returns {"files": n, "chunks": n, "skipped": n}
         return jsonify({
@@ -80,7 +79,7 @@ def upload_files():
         return jsonify({"error": f"Ingestion failed: {str(e)}"}), 500
 
 
-# ── /chat ─────────────────────────────────────────────────────────────────────
+
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -96,59 +95,7 @@ def chat():
         ...
         data: {"done": true}
     """
-    data = request.json or {}
-    query = data.get("query", "").strip()
-
-    if not query:
-        return jsonify({"error": "Query required"}), 400
-
-    def generate():
-        try: 
-            for chunk in rag_chain.stream(query):
-                payload = json.dumps({'type': 'token', 'value': chunk})
-                yield f"data: {payload}\n\n"
-        #  json.dumps, its used to convert python objects suchs as dict or list as json formatted string 
-        #  The yield keyword turns a function into a function generator.
-        #  The function generator returns an iterator.(which can be iterated using loop)          
-            # LLM finished generating, then send done =true for you frontend handling using sse
-            # yield f"data: {json.dumps({'done': True})}\n\n" XX Bad
-            payload = json.dumps({'type': 'done', 'value': True})
-            yield f"data: {payload}\n\n" # Better
-        #SSE protocol rule: Server-Sent Events require:    
-        #data: <message>\n\n
-        #That double newline means:
-        # “this message is complete, send it to client”    
-        except Exception as e:
-            traceback.print_exc()
-            yield f"data: {json.dumps({'type':'error','value': str(e)})}\n\n"
-
-    # This below line  keeps connection open
-    return Response(
-        stream_with_context(generate()),
-        mimetype="text/event-stream",
-        headers={
-            "Cache-Control":  "no-cache",
-            "X-Accel-Buffering": "no",    # disables nginx buffering
-        },
-    )
-
-
-# ── /status ───────────────────────────────────────────────────────────────────
-
-@app.route("/status", methods=["GET"])
-def status():
-    """Health check — returns collection document count."""
-    try:
-        from app.db.collection import get_collection
-        collection=get_collection()
-        log.info("collection here::",collection)
-        count = collection.count()
-        return jsonify({"status": "ok", "chunks_indexed": count})
-    except Exception as e:
-        return jsonify({"status": "error", "detail": str(e)}), 500
-
-
-# ── entry point ───────────────────────────────────────────────────────────────
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
