@@ -134,6 +134,19 @@ def chat():
 
 
 
+@app.route("/status", methods=["GET"])
+def status():
+    """Health check — returns collection document count."""
+    try:
+        from app.db.collection import get_collection
+        collection=get_collection()
+        log.info("collection here::",collection)
+        count = collection.count()
+        return jsonify({"status": "ok", "chunks_indexed": count})
+    except Exception as e:
+        return jsonify({"status": "error", "detail": str(e)}), 500
+
+
     
 
 if __name__ == "__main__":
