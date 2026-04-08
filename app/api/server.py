@@ -5,6 +5,7 @@ Flask API for CodeBrain — code ingestion + hybrid search + LLM streaming.
 Endpoints:
   POST /upload   — upload files, ingest into ChromaDB
   POST /chat     — streaming LLM answer via Server-Sent Events
+  GET  /status   — health check + collection doc count
 """
 
 import os
