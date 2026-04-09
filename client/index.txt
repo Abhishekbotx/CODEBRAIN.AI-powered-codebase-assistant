@@ -1,0 +1,6 @@
+** 1. file and folder upload,
+** 2. a.if i ask question, backend sends answer in chunks via server sent events, 
+      b.need to catch the chunks sent via backend, 
+      c.how to write on client side using the chunks in a stream manner,
+        the way chatgpt answers,
+        
