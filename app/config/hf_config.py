@@ -4,12 +4,12 @@ from app.config.settings import HF_API_KEY,HF_MODEL_REPO_ID
 from langchain_ollama import ChatOllama
 
 #Local llm setup
-llm = ChatOllama(
-    model="llama3.1:latest",
-    temperature=0,
+# llm = ChatOllama(
+#     model="llama3.1:latest",
+#     temperature=0,
     
-    # other params...
-)
+#     # other params...
+# )
 
 #Huggingface llm setup
 repo_id=HF_MODEL_REPO_ID
@@ -26,7 +26,7 @@ _hf_endpoint = HuggingFaceEndpoint(
 )
 #hf_endpoint expects string
 
-# llm = ChatHuggingFace(llm=_hf_endpoint) #chathuugingface returns formatted string having user, question and all
+llm = ChatHuggingFace(llm=_hf_endpoint) #chathuugingface returns formatted string having user, question and all
 #why do we need chathuggingface and endpoint both??
 # HuggingFace gives you a raw text generator,
 # LangChain chat pipelines require a chat interface,
