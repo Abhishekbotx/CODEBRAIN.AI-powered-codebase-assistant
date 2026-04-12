@@ -12,7 +12,7 @@ import os
 import shutil
 import json
 import traceback
-
+from app.config.settings import PORT
 from flask import Flask, request, jsonify, Response, stream_with_context
 from flask_cors import CORS
 
@@ -28,6 +28,20 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 # APIS
+
+@app.route("/", methods=["GET"])
+def index():
+    return jsonify({
+        "name":    "CodeBrain API",
+        "version": "1.0.0",
+        "status":  "running",
+        "endpoints": {
+            "GET  /":        "API info",
+            "GET  /status":  "health check + chunk count",
+            "POST /upload":  "ingest codebase files",
+            "POST /chat":    "streaming LLM answer (SSE)",
+        }
+    })
 
 @app.route("/upload", methods=["POST"])
 def upload_files():
@@ -151,4 +165,4 @@ def status():
     
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=PORT)
