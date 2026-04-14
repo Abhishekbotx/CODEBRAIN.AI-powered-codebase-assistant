@@ -4,8 +4,9 @@ import { FileList } from './fileList'
 
 
 export function UploadZone({
-  mode,  selectedFiles, phase, progressPct, progressLabel, canIngest,
+  mode, dragOver, selectedFiles, phase, progressPct, progressLabel, canIngest,
   filesInputRef, folderInputRef,
+  onDrop, onDragOver, onDragLeave,
   onFilesChange, onFolderChange, onModeSwitch, onIngest,
 }: uploadZoneProps) {
   const isWorking = phase === 'uploading' || phase === 'chunking'
@@ -29,6 +30,18 @@ export function UploadZone({
         onChange={(e) => onFolderChange(Array.from(e.target.files || []), 'folder')}
       />
 
+      <div
+        className={`dropZone ${dragOver ? 'dropZoneDragOver' : ''}`}
+        onDragOver={(e) => { e.preventDefault(); onDragOver() }}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+      >
+        <div className="dropIcon">⌂</div>
+        <div className="dropText">
+          <strong>Drop files/folder or use buttons below</strong>
+          <br />.py .ts .js .go .rs and more
+        </div>
+      </div>
 
       <div style={{ display: 'flex', gap: 10, marginTop: 10 }}>
         {(['files', 'folder'] as const).map((m) => (
