@@ -1,4 +1,4 @@
-
+import { formatFileLabel } from '../../lib/files'
 import type { fileListProps } from '../../types'
 
 export function FileList({ files }: fileListProps) {
@@ -7,7 +7,7 @@ export function FileList({ files }: fileListProps) {
   return (
     <div className="fileList">
       {files.slice(0, 20).map((f) => {
-        const label = f
+        const label = formatFileLabel(f)
         const ext = f.name.includes('.') ? `.${f.name.split('.').pop()}` : ''
         return (
           <div key={label} className="fileItem">
