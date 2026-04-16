@@ -2,6 +2,7 @@ import { StatusBadge } from './statusBadge'
 import { UploadZone } from './uploadZone'
 import type { sideBarProps } from '../../types'
 import { CodebrainIcon } from '../../assets/icons'
+import { MODEL } from '../../config/envConfig'
 
 export const Sidebar = ({
   statusPhase, statusText, chunksIndexed,
@@ -60,7 +61,7 @@ export const Sidebar = ({
         <div>hybrid search</div>
         <div className="value">dense + SPLADE sparse</div>
         <div style={{ marginTop: 8 }}>model</div>
-        <div className="value">Llama 3 8B Instruct</div>
+        <div className="value">{MODEL}</div>
       </div>
     </aside>
   )
