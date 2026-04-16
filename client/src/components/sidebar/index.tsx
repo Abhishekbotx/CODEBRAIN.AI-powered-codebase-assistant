@@ -1,7 +1,7 @@
 import { StatusBadge } from './statusBadge'
 import { UploadZone } from './uploadZone'
 import type { sideBarProps } from '../../types'
-
+import { CodebrainIcon } from '../../assets/icons'
 
 export const Sidebar = ({
   statusPhase, statusText, chunksIndexed,
@@ -13,6 +13,15 @@ export const Sidebar = ({
 }: sideBarProps) => {
   return (
     <aside className="sidebar">
+      <div className="logo">
+        <div className="logoMark" aria-hidden>
+          <CodebrainIcon />
+        </div>
+        <div>
+          <div className="logoText">CodeBrain</div>
+          <div className="logoSub">codebase Q&amp;A</div>
+        </div>
+      </div>
 
       <div className="divider" />
 
