@@ -54,6 +54,14 @@ export const Sidebar = ({
         />
       </div>
 
+      <div className="divider" />
+
+      <div className="infoBlock">
+        <div>hybrid search</div>
+        <div className="value">dense + SPLADE sparse</div>
+        <div style={{ marginTop: 8 }}>model</div>
+        <div className="value">Llama 3 8B Instruct</div>
+      </div>
     </aside>
   )
 }
