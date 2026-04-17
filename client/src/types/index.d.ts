@@ -55,3 +55,18 @@ export type sideBarProps = {
   onModeSwitch: (mode: 'files' | 'folder') => void
   onIngest: () => void
 }
+
+export type ToastKind = 'success' | 'info' | 'warning' | 'error'
+
+export type ToastInput = {
+  kind: ToastKind
+  title: string
+  message?: string
+  ttlMs?: number
+}
+
+export type ToastItem = ToastInput & {
+  id: string
+  createdAt: number
+}
+
