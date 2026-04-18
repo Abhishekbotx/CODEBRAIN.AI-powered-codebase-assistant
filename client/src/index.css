@@ -1,0 +1,112 @@
+:root {
+  --bg: #0c0e12;
+  --surface: #13161c;
+  --panel: #1a1e27;
+  --border: #252a36;
+  --border2: #2f3545;
+  --accent: #4ade80;
+  --accent2: #22d3ee;
+  --muted: #4a5169;
+  --text: #c8cedd;
+  --text2: #8892aa;
+  --danger: #f87171;
+  --warn: #fbbf24;
+  --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace;
+  --sans: 'Syne', system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  line-height: 1.6;
+  overflow: hidden;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+#root {
+  height: 100%;
+}
+
+
+
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border2);
+  border-radius: 2px;
+}
+
+
+.toasts {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  width: min(360px, calc(100vw - 32px));
+}
+
+.toast {
+  background: rgba(19, 22, 28, 0.92);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.toastTitle {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.toastMsg {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.toast-success {
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+.toast-info {
+  border-color: rgba(34, 211, 238, 0.45);
+}
+
+.toast-warning {
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+.toast-error {
+  border-color: rgba(248, 113, 113, 0.55);
+}
+

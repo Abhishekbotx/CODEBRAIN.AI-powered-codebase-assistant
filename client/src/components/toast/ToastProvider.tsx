@@ -23,8 +23,16 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   const value = useMemo(() => ({ pushToast }), [pushToast])
 
   return (
-    <div>
-      
-    </div>
+    <ToastContext.Provider value={value}>
+      {children}
+      <div className="toasts" aria-live="polite" aria-relevant="additions removals">
+        {toasts.map((t) => (
+          <div key={t.id} className={`toast toast-${t.kind}`}>
+            <div className="toastTitle">{t.title}</div>
+            {t.message ? <div className="toastMsg">{t.message}</div> : null}
+          </div>
+        ))}
+      </div>
+    </ToastContext.Provider>
   )
 }
