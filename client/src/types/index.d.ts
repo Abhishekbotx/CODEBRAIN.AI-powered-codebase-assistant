@@ -14,6 +14,8 @@ export type statusBadgeProps = {
   chunksIndexed: number | null
 }
 
+type UploadPhase = 'idle' | 'uploading' | 'chunking' | 'done' | 'error'
+
 export type uploadZoneProps = {
   mode: 'files' | 'folder'
   dragOver: boolean
@@ -68,5 +70,9 @@ export type ToastInput = {
 export type ToastItem = ToastInput & {
   id: string
   createdAt: number
+}
+
+export type ToastContextValue = {
+  pushToast: (toast: ToastInput) => void
 }
 
