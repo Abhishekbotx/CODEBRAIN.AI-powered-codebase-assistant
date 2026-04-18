@@ -1,0 +1,234 @@
+.app {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  height: 100vh;
+}
+
+.sidebar {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 28px 24px;
+  gap: 28px;
+  overflow-y: auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoMark {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.logoMark svg {
+  width: 18px;
+  height: 18px;
+}
+
+.logoText {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.logoSub {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.sectionLabel {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 11px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statusDotIdle {
+  background: var(--muted);
+}
+
+.statusDotOk {
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+}
+
+.statusDotError {
+  background: var(--danger);
+}
+
+.statusDotLoading {
+  background: var(--warn);
+  animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.statusText {
+  color: var(--text2);
+  flex: 1;
+}
+
+.statusCount {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.dropZone {
+  border: 1.5px dashed var(--border2);
+  border-radius: 12px;
+  padding: 28px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition:border-color 0.2s background 0.2s;
+  position: relative;
+}
+
+.dropZone:hover,
+.dropZoneDragOver {
+  border-color: var(--accent);
+  background: rgba(74, 222, 128, 0.04);
+}
+
+.fileInput {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+}
+
+.dropIcon {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.dropText {
+  font-size: 12px;
+  color: var(--text2);
+  line-height: 1.8;
+}
+
+.dropText strong {
+  color: var(--text);
+}
+
+.fileList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 160px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.fileDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent2);
+  flex-shrink: 0;
+}
+
+.fileName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.fileExt {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.btn {
+  width: 100%;
+  padding: 11px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+  transition:
+    opacity 0.15s,
+    transform 0.1s;
+  margin-top: 12px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btnPrimary {
+  background: var(--accent);
+  color: #0a1a0f;
+}
+
+.btnPrimary:hover {
+  opacity: 0.88;
+}
+
+.btnPrimary:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
