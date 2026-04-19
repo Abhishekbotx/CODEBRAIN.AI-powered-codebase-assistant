@@ -76,3 +76,11 @@ export type ToastContextValue = {
   pushToast: (toast: ToastInput) => void
 }
 
+export type inputBarProps = {
+  value: string
+  isStreaming: boolean
+  textareaRef: RefObject<HTMLTextAreaElement>
+  onChange: (value: string) => void
+  onAutosize: () => void
+  onSend: () => void
+}
