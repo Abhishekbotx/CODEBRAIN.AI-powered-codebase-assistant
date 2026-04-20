@@ -84,3 +84,9 @@ export type inputBarProps = {
   onAutosize: () => void
   onSend: () => void
 }
+
+
+export type messageListProps = {
+  messages: ChatMessage[]
+  isStreaming: boolean
+}
