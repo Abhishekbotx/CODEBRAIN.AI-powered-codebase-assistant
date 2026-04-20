@@ -232,3 +232,76 @@
   cursor: not-allowed;
   transform: none;
 }
+
+.inputBar {
+  padding: 16px 28px 20px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.inputWrap {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 10px 14px;
+  transition: border-color 0.2s;
+}
+
+.inputWrap:focus-within {
+  border-color: var(--accent);
+}
+
+.queryInput {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 13px;
+  resize: none;
+  max-height: 140px;
+  line-height: 1.6;
+}
+
+.queryInput::placeholder {
+  color: var(--muted);
+}
+
+.sendBtn {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.15s;
+}
+
+.sendBtn:hover {
+  opacity: 0.85;
+}
+
+.sendBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.sendBtn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.inputHint {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 8px;
+  text-align: center;
+}
+
