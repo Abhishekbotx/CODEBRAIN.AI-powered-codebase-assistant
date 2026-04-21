@@ -389,7 +389,7 @@
 
 .cursor {
   display: inline-block;
-  width: 8px;
+  width: 4px;
   height: 14px;
   background: var(--accent);
   border-radius: 1px;
@@ -408,17 +408,3 @@
   }
 }
 
-
-
-
-
-
-.infoBlock {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.9;
-}
-
-.infoBlock .value {
-  color: var(--text2);
-}
