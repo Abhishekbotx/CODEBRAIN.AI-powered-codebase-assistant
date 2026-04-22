@@ -19,3 +19,9 @@ export const SUPPORTED_EXTENSIONS = [
   '.md',
 ] as const
 
+export const DEFAULT_SUGGESTIONS = [
+  'Where is the ChromaDB setup code?',
+  'How does the chunker split code?',
+  'Show me the hybrid search logic',
+  'What does the ingestion pipeline do?',
+] as const
