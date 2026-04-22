@@ -90,3 +90,7 @@ export type messageListProps = {
   messages: ChatMessage[]
   isStreaming: boolean
 }
+
+export type emptyStateProps = {
+  onSuggestionClick: (text: string) => void
+}
