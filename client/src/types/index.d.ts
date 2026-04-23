@@ -94,3 +94,28 @@ export type messageListProps = {
 export type emptyStateProps = {
   onSuggestionClick: (text: string) => void
 }
+
+
+export type chatPanelProps = {
+  messages: ChatMessage[]
+  isStreaming: boolean
+  input: string
+  textareaRef: RefObject<HTMLTextAreaElement>
+  onInputChange: (value: string) => void
+  onAutosize: () => void
+  onSend: () => void
+  onClear: () => void
+  onSuggestionClick: (text: string) => void
+}
+
+
+export type uploadStateProps = {
+  mode: 'files' | 'folder'
+  selectedFiles: File[]
+  dragOver: boolean
+  phase: UploadPhase
+  progressPct: number
+  progressLabel: string
+  lastCompletedFingerprint: string | null
+  lastKnownChunksIndexed: number | null
+}
