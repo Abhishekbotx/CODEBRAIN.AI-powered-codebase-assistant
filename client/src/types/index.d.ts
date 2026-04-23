@@ -119,3 +119,23 @@ export type uploadStateProps = {
   lastCompletedFingerprint: string | null
   lastKnownChunksIndexed: number | null
 }
+
+export type StatusResponse = { status: 'ok'; chunks_indexed: number } | { status: 'error'; detail?: string }
+
+export type UploadResponse = {
+  message?: string
+  files_saved?: number
+  files_skipped?: number
+  ingestion?: { files?: number; chunks?: number; skipped?: number }
+  error?: string
+}
+
+export type ChatStreamEvent = { type:string; value?: string|boolean }
+
+
+export type ChatMessage = {
+  id: string
+  role: 'user' | 'bot'
+  text: string
+}
+
