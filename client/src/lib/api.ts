@@ -1,5 +1,5 @@
 import { API_URL } from "../config/envConfig"
-import type {  StatusResponse,  UploadResponse } from "../types"
+import type { ChatStreamEvent, StatusResponse,  UploadResponse } from "../types"
 
 const API_BASE = API_URL
 
@@ -29,6 +29,21 @@ export const api = {
     return data
   },
 
-  
+  async *chatStream(body: { query: string }): AsyncGenerator<ChatStreamEvent, void, void> {
+    const res = await fetch(`${API_BASE}/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+
+    console.log("res::",res)
+
+    if (!res.ok || !res.body) {
+      const err = await parseJsonSafe<{ error?: string }>(res)
+      throw new Error(err?.error || `HTTP ${res.status}`)
+    }
+
+
+  },
 }
 
