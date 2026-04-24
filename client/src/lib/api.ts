@@ -1,5 +1,5 @@
 import { API_URL } from "../config/envConfig"
-import type {  StatusResponse, } from "../types"
+import type {  StatusResponse,  UploadResponse } from "../types"
 
 const API_BASE = API_URL
 
@@ -22,7 +22,13 @@ export const api = {
     return data as Extract<StatusResponse, { status: 'ok' }>
   },
 
- 
+  async upload(formData: FormData) {
+    const res = await fetch(`${API_BASE}/upload`, { method: 'POST', body: formData })
+    const data = (await parseJsonSafe<UploadResponse>(res)) || {}
+    if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`)
+    return data
+  },
+
   
 }
 
