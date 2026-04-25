@@ -43,7 +43,24 @@ export const api = {
       throw new Error(err?.error || `HTTP ${res.status}`)
     }
 
+    //what is getReader? 
+    // it gives you a low level stream reader, to read chunk by chunk rather than waiting
+    //  for the whole response.
+    //Backend → sends chunks
+    //Reader → receives chunks
 
+    const reader = res.body.getReader() //This is the heart of streaming
+    console.log("reader::",reader)
+    const decoder = new TextDecoder() //Converts binary → string 👉encoding to utf-8
+    let buffer = ''
+
+    //Keep reading until stream ends
+    while (true) {
+      const { done, value } = await reader.read() //done are value are internal output of reader
+      // keep in mind in apis either you get token or in the last done (ref , file;server.py ln:113)
+      console.log("done, value::",done, decoder.decode(value))
+      
+    }
   },
 }
 
