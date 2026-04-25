@@ -76,7 +76,25 @@ export const api = {
       // In our case Flask flushes one message per chunk so split is not strictly
       // needed locally, but in production behind nginx/proxies chunks can merge —
       // split + pop protects against that.
-      
+      console.log("parts::",parts)
+      buffer = parts.pop() || '' //Last line might be incomplete → keep it in buffer for next round
+      /* ✨here its not important to have parts.pop coz chunks are comming in right manner   Your local dev works perfectly because there's no proxy
+       in between.But The moment you deploy behind nginx or any reverse proxy, chunks can merge and the 
+       split+pop saves you from mysterious production bugs. */
+      for (const line of parts) { // Process complete lines
+        if (!line.startsWith('data: ')) continue // SSE format: lines start with "data: "
+        console.log("line:",line)
+        const raw = line.slice(6) //removes "data: " prefix
+        console.log("raw::",raw)
+
+        try {
+          const payload = JSON.parse(raw) as ChatStreamEvent
+          console.log("payload:",payload)
+          yield payload
+        } catch (error){
+          console.error("Error parsing SSE message:", error)
+        }
+      }
     }
   },
 }
