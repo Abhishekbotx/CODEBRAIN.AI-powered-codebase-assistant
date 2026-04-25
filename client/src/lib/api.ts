@@ -59,6 +59,23 @@ export const api = {
       const { done, value } = await reader.read() //done are value are internal output of reader
       // keep in mind in apis either you get token or in the last done (ref , file;server.py ln:113)
       console.log("done, value::",done, decoder.decode(value))
+      if (done) break
+
+      buffer += decoder.decode(value, { stream: true })// why ?{ stream: true } 👉 prevents breaking UTF-8 characters across chunks , means it can handle broken words aswell
+      const parts = buffer.split('\n') //Because SSE sends: data: {...}\n\n
+      // WHY split('\n')?
+      // One reader.read() call can return MULTIPLE SSE messages jammed together:
+      // "data: {"type":"token","value":"hello"}\n\ndata: {"type":"token","value":"world"}\n\n"
+      //
+      // If you JSON.parse the whole buffer directly → 💥 SyntaxError (multiple JSON objects)
+      // Split by '\n' → separates each message → parse one at a time ✅
+
+      // ✨The key insight is — JSON.parse doesn't fail because of \n, 
+      // it fails because you'd be trying to parse two JSON objects at once which is invalid JSON
+
+      // In our case Flask flushes one message per chunk so split is not strictly
+      // needed locally, but in production behind nginx/proxies chunks can merge —
+      // split + pop protects against that.
       
     }
   },
