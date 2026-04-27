@@ -27,7 +27,7 @@ UPLOAD_DIR = "uploaded_repos"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
-# ── /upload ───────────────────────────────────────────────────────────────────
+# APIS
 
 @app.route("/upload", methods=["POST"])
 def upload_files():
@@ -43,7 +43,7 @@ def upload_files():
 
     repo_path = os.path.join(UPLOAD_DIR, "repo")
 
-    # clear previous upload
+    # clearing previous upload
     if os.path.exists(repo_path):
         shutil.rmtree(repo_path)
     os.makedirs(repo_path, exist_ok=True)
@@ -66,7 +66,7 @@ def upload_files():
     if not saved:
         return jsonify({"error": "All files failed to save", "details": skipped}), 500
 
-    # run ingestion
+    # then ingestion
     try:
         stats = ingest_repo(repo_path)   # returns {"files": n, "chunks": n, "skipped": n}
         return jsonify({
@@ -80,7 +80,7 @@ def upload_files():
         return jsonify({"error": f"Ingestion failed: {str(e)}"}), 500
 
 
-# ── /chat ─────────────────────────────────────────────────────────────────────
+
 
 @app.route("/chat", methods=["POST"])
 def chat():
@@ -133,7 +133,7 @@ def chat():
     )
 
 
-# ── /status ───────────────────────────────────────────────────────────────────
+
 
 @app.route("/status", methods=["GET"])
 def status():
@@ -148,7 +148,7 @@ def status():
         return jsonify({"status": "error", "detail": str(e)}), 500
 
 
-# ── entry point ───────────────────────────────────────────────────────────────
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
