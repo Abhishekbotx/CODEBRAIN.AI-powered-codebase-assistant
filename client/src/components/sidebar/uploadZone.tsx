@@ -1,5 +1,5 @@
 import { SUPPORTED_EXTENSIONS } from '../../types/types.ts';
-import { type uploadZoneProps } from '../../types';
+import type {  uploadZoneProps } from '../../types';
 import { FileList } from './fileList'
 
 
