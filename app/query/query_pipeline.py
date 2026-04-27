@@ -26,3 +26,25 @@ def format_docs(results: list[SearchResult]) -> str:
 
 
 
+
+def print_results(results: list[SearchResult], show_code: bool = True) -> None:
+    print(f"\n{'═' * 60}  {len(results)} result(s)\n")
+    for i, r in enumerate(results, 1):
+        print(f"[{i}] {r.metadata.get('file')}  "
+              f"lines {r.metadata.get('start_line')}–{r.metadata.get('end_line')}  "
+              f"score={r.score:.4f}")
+        if show_code:
+            print("     ┌───────────────────────────────────────── START")
+            for line in r.content.splitlines()[:10]: #printing only 10 lines
+                print(f"     │ {line}")
+            if len(r.content.splitlines()) > 10:
+                print(f"     │ … ({len(r.content.splitlines())} lines total)")
+            print("     └───────────────────────────────────────── END")
+        print()
+
+
+
+if __name__ == "__main__":
+    for q in ["where is chromadb setup?", "token counting function"]:
+        print(f"\nQuery: {q!r}")
+        print_results(hybrid_search(q, n_results=3))
