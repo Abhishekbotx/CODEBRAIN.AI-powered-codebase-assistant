@@ -1,7 +1,8 @@
 import { useStatus } from '../hooks/useStatus'
 import { useUpload } from '../hooks/useUpload'
+import { useChat } from '../hooks/useChat'
 import { Sidebar } from '../components/sidebar' 
-
+import { ChatPanel } from '../components/chat'
 
 export function AppShell() {
   const { status, updateStatus } = useStatus()
@@ -12,7 +13,11 @@ export function AppShell() {
     handleFiles, onDrop, onIngest,
   } = useUpload(updateStatus)
 
-
+  const {
+    chat, setChat,
+    queryTextareaRef, autosizeTextarea,
+    clearChat, fillQuery, sendMessage,
+  } = useChat(upload.phase)
 
   return (
     <div className="app">
@@ -38,7 +43,17 @@ export function AppShell() {
         onIngest={onIngest}
       />
 
-
+      <ChatPanel
+        messages={chat.messages}
+        isStreaming={chat.isStreaming}
+        input={chat.input} //@ts-expect-error
+        textareaRef={queryTextareaRef} 
+        onInputChange={(value) => setChat((p) => ({ ...p, input: value }))}
+        onAutosize={autosizeTextarea}
+        onSend={sendMessage}
+        onClear={clearChat}
+        onSuggestionClick={fillQuery}
+      />
     </div>
   )
 }
